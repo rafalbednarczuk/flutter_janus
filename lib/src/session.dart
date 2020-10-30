@@ -898,7 +898,9 @@ class Session {
           return;
         }
         // If we got here, the plugin decided to handle the request asynchronously
-        callbacks.success();
+        if(callbacks.success!=null) {
+          callbacks.success();
+        }
       };
       this.ws.send(jsonEncode(request));
       return;
@@ -1918,6 +1920,7 @@ class Session {
         bool audioSupport = media['audio'];
 
       bool videoSupport = isVideoSendEnabled(media);
+      print("media:${media}");
       if (videoSupport && media != null) {
         bool simulcast = (callbacks.simulcast == true);
         bool simulcast2 = (callbacks.simulcast2 == true);
